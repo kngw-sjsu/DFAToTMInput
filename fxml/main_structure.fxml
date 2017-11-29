@@ -1,0 +1,89 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Separator?>
+
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane fx:controller="source.MainController"
+            xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/stylize.css">
+    <top>
+        <MenuBar>
+            <Menu text="Help">
+                <MenuItem text="About" onAction="#openAboutDialog" />
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <VBox>
+            <padding> <!-- VBox用 -->
+                <Insets left="10" right="10" />
+            </padding>
+            <HBox styleClass="hbox">
+                <Label styleClass="symbol" text="Q" />
+                <TextField fx:id="states" HBox.hgrow="ALWAYS" promptText="e.g. 0,1,2,3"
+                           /> <!--onMouseReleased="#showContextMenu" onKeyReleased="#checkStatesSymbolsEntered" /-->
+                <VBox styleClass="brief-explain-box">
+                    <Label text="Enter all states as" />
+                    <Label text="numbers, comma separated" />
+                </VBox>
+            </HBox>
+            <HBox styleClass="hbox">
+                <Label styleClass="symbol" text="Σ" />
+                <TextField fx:id="symbols" HBox.hgrow="ALWAYS" promptText="e.g. abc"
+                            /> <!--onMouseReleased="#showContextMenu" onKeyReleased="#checkStatesSymbolsEntered" /-->
+                <VBox styleClass="brief-explain-box">
+                    <Label text="Enter all symbols," />
+                    <Label text="without any commas" />
+                </VBox>
+            </HBox>
+            <HBox styleClass="hbox">
+                <Label styleClass="symbol" text="F" />
+                <TextField fx:id="finalState" HBox.hgrow="ALWAYS" promptText="Final State" />
+                <VBox styleClass="brief-explain-box">
+                    <Label text="Enter the final state;" />
+                    <Label text="Must be from Q" />
+                </VBox>
+            </HBox>
+            <HBox styleClass="hbox" alignment="CENTER_RIGHT">
+                <Button fx:id="setButton" onAction="#setStatesAndSymbols" text="Set" disable="true" />
+            </HBox>
+            <Separator />
+            <ScrollPane maxHeight="306" styleClass="edge-to-edge">
+                <VBox fx:id="transitionRulesBox">
+                    <HBox styleClass="hbox">
+                        <Label styleClass="symbol" text="δ" />
+                        <Label styleClass="symbol" text="(q," />
+                        <TextField prefWidth="40" disable="true" />
+                        <Label styleClass="symbol" text=") =" />
+                        <TextField prefWidth="40" disable="true" />
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+            <!-- ここを伸縮自在にする -->
+            <HBox styleClass="hbox">
+                <Label styleClass="symbol" text="w" />
+                <TextField fx:id="inputString" promptText="e.g. bba" disable="true" />
+                <VBox styleClass="brief-explain-box">
+                    <Label text="Input string goes here;" />
+                    <Label text="Must be from Σ*" />
+                </VBox>
+            </HBox>
+            <HBox styleClass="hbox" alignment="CENTER_RIGHT">
+                <Button fx:id="clearButton" onAction="#clearRuleInputs" text="Clear" disable="true" />
+                <Button fx:id="convertButton" onAction="#convertDFA" text="Convert" disable="true" />
+            </HBox>
+            <Separator />
+            <HBox styleClass="hbox">
+                <TextField fx:id="output" promptText="TM Input String Representation"
+                           HBox.hgrow="ALWAYS" disable="true" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
