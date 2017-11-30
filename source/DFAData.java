@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -27,9 +28,11 @@ class DFAData {
     {
         states = new HashMap<>();
         symbols = new HashMap<>();
+        inputString = "";
+        nextStates = null;
     }
 
-    DFAData(int[] states, char[] symbols, int[] finalStates) {
+    DFAData(ArrayList<Integer> states, ArrayList<Character> symbols, ArrayList<Integer> finalStates) {
         String s = "";
         for (Integer state : states) {
             s += "1";
@@ -41,15 +44,13 @@ class DFAData {
             this.symbols.put(symbol, s);
         }
 
-        this.finalStates = new String[finalStates.length];
+        this.finalStates = new String[finalStates.size()];
         int i = 0;
         for (int finalState : finalStates) {
             this.finalStates[i] = this.states.get(finalState);
             i++;
         }
-        inputString = "";
-        nextStates = null;
-        size = states.length * symbols.length;
+        size = states.size() * symbols.size();
     }
 
     HBox[] generateTransitionRules(final Button convertButton, final Button clearButton) {

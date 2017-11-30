@@ -4,11 +4,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -65,7 +65,7 @@ public class MainController implements Initializable {
     @FXML
     private void openAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                "Version: 1.0\n©Joe Kanagawa, San Jose State University");
+                "Version: 1.1\n©Joe Kanagawa, San Jose State University");
         alert.setHeaderText("DFA To TM Input Converter");
         alert.showAndWait();
     }
@@ -73,19 +73,16 @@ public class MainController implements Initializable {
     @FXML
     private void setStatesAndSymbols() {
         try {
-            String[] splitStates = states.getText().split(",");
-            int[] allStates = new int[splitStates.length];
-            for (int i = 0; i < splitStates.length; i++)
-                allStates[i] = Integer.parseInt(splitStates[i]);
-            char[] allSymbols = symbols.getText().toCharArray();
-            splitStates = finalState.getText().split(",");
-            int[] allFinalStates = new int[splitStates.length];
-            System.out.println(splitStates.length);
-            for (int i = 0; i < splitStates.length; i++)
-                allFinalStates[i] = Integer.parseInt(splitStates[i]);
+            ArrayList<Integer> allStates = new ArrayList<>();
+            for (String state : states.getText().split(","))
+                allStates.add(Integer.parseInt(state));
+            ArrayList<Character> allSymbols = trimDuplicates(symbols.getText().toCharArray());
+            ArrayList<Integer> allFinalStates = new ArrayList<>();
+            for (String finalState : finalState.getText().split(","))
+                allFinalStates.add(Integer.parseInt(finalState));
             if (!isMemberOf(allFinalStates, allStates)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR,
-                        "The final state is not an element of Q!");
+                        "Some final state is not an element of Q!");
                 alert.setHeaderText("Invalid final state");
                 alert.showAndWait();
                 return;
@@ -109,14 +106,24 @@ public class MainController implements Initializable {
         }
     }
 
-    private boolean isMemberOf(int[] numbers, int[] intArr) {
+    private boolean isMemberOf(ArrayList<Integer> numbers, ArrayList<Integer> intArr) {
         for (int number : numbers) {
-            for (int eachInt : intArr) {
-                if (number == eachInt)
-                    return true;
+            int checker = 0;
+            for (int eachInt : intArr)
+                checker |= number == eachInt ? 1 : 0;
+            if (checker == 0) return false;
+        }
+        return true;
+    }
+
+    private ArrayList<Character> trimDuplicates(char[] arr) {
+        ArrayList<Character> c = new ArrayList<>();
+        for (char each : arr) {
+            if (!c.contains(each)) {
+                c.add(each);
             }
         }
-        return false;
+        return c;
     }
 
     @Override

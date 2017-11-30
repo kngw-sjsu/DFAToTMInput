@@ -27,8 +27,7 @@
             </padding>
             <HBox styleClass="hbox">
                 <Label styleClass="symbol" text="Q" />
-                <TextField fx:id="states" HBox.hgrow="ALWAYS" promptText="e.g. 0,1,2,3"
-                           /> <!--onMouseReleased="#showContextMenu" onKeyReleased="#checkStatesSymbolsEntered" /-->
+                <TextField fx:id="states" HBox.hgrow="ALWAYS" promptText="e.g. 0,1,2,3" />
                 <VBox styleClass="brief-explain-box">
                     <Label text="Enter all states as" />
                     <Label text="numbers, comma separated" />
@@ -37,7 +36,7 @@
             <HBox styleClass="hbox">
                 <Label styleClass="symbol" text="Σ" />
                 <TextField fx:id="symbols" HBox.hgrow="ALWAYS" promptText="e.g. abc"
-                            /> <!--onMouseReleased="#showContextMenu" onKeyReleased="#checkStatesSymbolsEntered" /-->
+                            />
                 <VBox styleClass="brief-explain-box">
                     <Label text="Enter all symbols," />
                     <Label text="without any commas" />
@@ -45,10 +44,10 @@
             </HBox>
             <HBox styleClass="hbox">
                 <Label styleClass="symbol" text="F" />
-                <TextField fx:id="finalState" HBox.hgrow="ALWAYS" promptText="Final State" />
+                <TextField fx:id="finalState" HBox.hgrow="ALWAYS" promptText="e.g. 1,2" />
                 <VBox styleClass="brief-explain-box">
-                    <Label text="Enter the final state;" />
-                    <Label text="Must be from Q" />
+                    <Label text="Enter the final states;" />
+                    <Label text="must be from Q" />
                 </VBox>
             </HBox>
             <HBox styleClass="hbox" alignment="CENTER_RIGHT">
