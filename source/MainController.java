@@ -65,7 +65,7 @@ public class MainController implements Initializable {
     @FXML
     private void openAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                "Version: 1.1\n©Joe Kanagawa, San Jose State University");
+                "Version: 1.1.1\n©Joe Kanagawa, San Jose State University");
         alert.setHeaderText("DFA To TM Input Converter");
         alert.showAndWait();
     }

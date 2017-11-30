@@ -14,7 +14,7 @@ public class DFAToTMInputMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/main_structure.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("main_structure.fxml"));
         primaryStage.setTitle("DFA To TM Input Converter");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
