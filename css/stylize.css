@@ -29,6 +29,10 @@
     -fx-font-size: 18px;
 }
 
+.text-field .context-menu {
+    -fx-background-color: white;
+}
+
 .transition-rule {
     -fx-font-weight: bold;
     -fx-alignment: center;

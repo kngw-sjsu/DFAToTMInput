@@ -1,5 +1,6 @@
 package source;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -63,9 +64,14 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    private void exit() {
+        Platform.exit();
+    }
+
+    @FXML
     private void openAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                "Version: 1.1.1\n©Joe Kanagawa, San Jose State University");
+                "Version: 1.1.2\n©Joe Kanagawa, San Jose State University");
         alert.setHeaderText("DFA To TM Input Converter");
         alert.showAndWait();
     }
@@ -119,9 +125,8 @@ public class MainController implements Initializable {
     private ArrayList<Character> trimDuplicates(char[] arr) {
         ArrayList<Character> c = new ArrayList<>();
         for (char each : arr) {
-            if (!c.contains(each)) {
+            if (!c.contains(each))
                 c.add(each);
-            }
         }
         return c;
     }
@@ -131,5 +136,16 @@ public class MainController implements Initializable {
         for (TextField tf : new TextField[]{states,symbols,finalState}) {
             tf.textProperty().addListener(e -> checkStatesSymbolsEntered());
         }
+        inputString.textProperty().addListener(e -> {
+            for (char inputSymbol : inputString.getText().toCharArray()) {
+                if (!dfa.getSymbols().keySet().contains(inputSymbol)) {
+                    inputString.setStyle("-fx-control-inner-background: "+ DFAData.NG);
+                    convertButton.setDisable(true);
+                    return;
+                }
+            }
+            inputString.setStyle("-fx-control-inner-background: "+ DFAData.OK);
+            convertButton.setDisable(false);
+        });
     }
 }

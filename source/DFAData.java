@@ -14,8 +14,8 @@ import java.util.HashMap;
  */
 class DFAData {
 
-    private static final String OK = "#ABEBC6";
-    private static final String NG = "#F5B7B1";
+    static final String OK = "#ABEBC6";
+    static final String NG = "#F5B7B1";
 
     private HashMap<Integer, String> states;
     private HashMap<Character, String> symbols;
@@ -58,7 +58,6 @@ class DFAData {
         int i = 0;
         for (int state : states.keySet()) {
             for (char symbol : symbols.keySet()) {
-                System.out.println("q" + state + ": " + symbol);
                 HBox transitionRule = new HBox(8);
                 transitionRule.getStyleClass().add("hbox");
                 Label symbolLabel = new Label("δ");
@@ -104,6 +103,8 @@ class DFAData {
     HashMap<Integer, String> getStates() {
         return states;
     }
+
+    HashMap<Character, String> getSymbols() { return symbols; }
 
     private boolean isState(int inputState) {
         for (int eachState : states.keySet()) {

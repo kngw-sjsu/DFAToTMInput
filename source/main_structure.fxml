@@ -15,6 +15,9 @@
             xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/stylize.css">
     <top>
         <MenuBar>
+            <Menu text="File">
+                <MenuItem text="Exit" onAction="#exit" />
+            </Menu>
             <Menu text="Help">
                 <MenuItem text="About" onAction="#openAboutDialog" />
             </Menu>
