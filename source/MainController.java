@@ -60,7 +60,7 @@ public class MainController implements Initializable {
 
     private void checkStatesSymbolsEntered() {
         setButton.setDisable(states.getText().equals("")
-                || symbols.getText().equals("") || finalState.getText().equals(""));
+                || symbols.getText().equals(""));
     }
 
     @FXML
@@ -71,7 +71,7 @@ public class MainController implements Initializable {
     @FXML
     private void openAboutDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                "Version: 1.1.2\n©Joe Kanagawa, San Jose State University");
+                "Version: 1.1.3\tDecember 2, 2017\n©Joe Kanagawa, San Jose State University");
         alert.setHeaderText("DFA To TM Input Converter");
         alert.showAndWait();
     }
@@ -83,15 +83,18 @@ public class MainController implements Initializable {
             for (String state : states.getText().split(","))
                 allStates.add(Integer.parseInt(state));
             ArrayList<Character> allSymbols = trimDuplicates(symbols.getText().toCharArray());
+            String finals = finalState.getText();
             ArrayList<Integer> allFinalStates = new ArrayList<>();
-            for (String finalState : finalState.getText().split(","))
-                allFinalStates.add(Integer.parseInt(finalState));
-            if (!isMemberOf(allFinalStates, allStates)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR,
-                        "Some final state is not an element of Q!");
-                alert.setHeaderText("Invalid final state");
-                alert.showAndWait();
-                return;
+            if (finals.length() > 0) /* 長さ0で受理状態の存在しないオートマトンとなる */ {
+                for (String finalState : finals.split(","))
+                    allFinalStates.add(Integer.parseInt(finalState));
+                if (!isMemberOf(allFinalStates, allStates)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR,
+                            "Some final state is not an element of Q!");
+                    alert.setHeaderText("Invalid final state");
+                    alert.showAndWait();
+                    return;
+                }
             }
             dfa = new DFAData(allStates, allSymbols, allFinalStates);
             transitionRulesBox.getChildren().setAll(dfa.generateTransitionRules(convertButton, clearButton));
@@ -144,8 +147,8 @@ public class MainController implements Initializable {
                     return;
                 }
             }
-            inputString.setStyle("-fx-control-inner-background: "+ DFAData.OK);
-            convertButton.setDisable(false);
+            inputString.setStyle("-fx-control-inner-background: " + DFAData.OK);
+            if (dfa.rulesAreValid()) convertButton.setDisable(false);
         });
     }
 }

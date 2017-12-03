@@ -50,7 +50,7 @@
                 <TextField fx:id="finalState" HBox.hgrow="ALWAYS" promptText="e.g. 1,2" />
                 <VBox styleClass="brief-explain-box">
                     <Label text="Enter the final states;" />
-                    <Label text="must be from Q" />
+                    <Label text="empty or must be from Q" />
                 </VBox>
             </HBox>
             <HBox styleClass="hbox" alignment="CENTER_RIGHT">
@@ -74,7 +74,7 @@
                 <TextField fx:id="inputString" promptText="e.g. bba" disable="true" />
                 <VBox styleClass="brief-explain-box">
                     <Label text="Input string goes here;" />
-                    <Label text="Must be from Σ*" />
+                    <Label text="must be from Σ*" />
                 </VBox>
             </HBox>
             <HBox styleClass="hbox" alignment="CENTER_RIGHT">

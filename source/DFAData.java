@@ -24,12 +24,14 @@ class DFAData {
     private String inputString;
     private String[] nextStates;
     private int size;
+    private boolean rulesAllValid;
 
     {
         states = new HashMap<>();
         symbols = new HashMap<>();
         inputString = "";
         nextStates = null;
+        rulesAllValid = false;
     }
 
     DFAData(ArrayList<Integer> states, ArrayList<Character> symbols, ArrayList<Integer> finalStates) {
@@ -75,9 +77,11 @@ class DFAData {
                         TextField field = (TextField) eachRule.getChildren().get(2); // 3番目の要素がTextField
                         if (!field.getStyle().contains(OK)) {
                             convertButton.setDisable(true);
+                            rulesAllValid = false;
                             break;
                         }
                         convertButton.setDisable(false);
+                        rulesAllValid = true;
                     }
                     for (HBox eachRule : transitionRules) /* うーん.. ここももうちょっと縮められそうなんだよなぁ.. */ {
                         TextField field = (TextField) eachRule.getChildren().get(2);
@@ -104,7 +108,9 @@ class DFAData {
         return states;
     }
 
-    HashMap<Character, String> getSymbols() { return symbols; }
+    HashMap<Character, String> getSymbols() {
+        return symbols;
+    }
 
     private boolean isState(int inputState) {
         for (int eachState : states.keySet()) {
@@ -112,6 +118,10 @@ class DFAData {
                 return true;
         }
         return false;
+    }
+
+    boolean rulesAreValid() {
+        return rulesAllValid;
     }
 
     void setInputString(String s) {
@@ -125,20 +135,24 @@ class DFAData {
     @Override
     public String toString() {
         if (nextStates == null) return "";
-        String finalProduct = "";
+        StringBuilder builder = new StringBuilder("");
         for (int i = 0; i < inputString.length(); i++)
-            finalProduct += (symbols.get(inputString.charAt(i))
-                    + (i == inputString.length() - 1 ? "" : "0"));
+            builder.append(symbols.get(inputString.charAt(i)))
+                    .append(i == inputString.length() - 1 ? "" : "0");
         int count = 0;
         for (HashMap.Entry<Integer, String> state : states.entrySet()) {
             for (HashMap.Entry<Character, String> symbol : symbols.entrySet()) {
-                finalProduct += "D" + state.getValue() + "0" + symbol.getValue() + "0" + nextStates[count];
+                builder.append("D").append(state.getValue()).append("0")
+                        .append(symbol.getValue()).append("0").append(nextStates[count]);
                 count++;
             }
         }
-        finalProduct += "F";
-        for (String finalState : finalStates)
-            finalProduct += finalState + "0";
-        return finalProduct.substring(0,finalProduct.length() - 1);
+        builder.append("F");
+        for (int i = 0; i < finalStates.length; i++) {
+            builder.append(finalStates[i]);
+            if (i < finalStates.length - 1)
+                builder.append("0");
+        }
+        return builder.toString();
     }
 }
